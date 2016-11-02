@@ -6,4 +6,5 @@ public class Submarine {
 	private Position position;
 	private Team owner;
 	
+	
 }

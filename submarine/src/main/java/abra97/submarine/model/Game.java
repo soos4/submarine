@@ -15,5 +15,6 @@ public class Game {
 	public Long getGameID() {
 		return gameID;
 	}
+
 	
 }

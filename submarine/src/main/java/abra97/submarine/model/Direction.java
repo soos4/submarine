@@ -7,6 +7,7 @@ public class Direction {
 	public static final Direction WEST = new Direction(180);
 	public static final Direction SOUTH = new Direction(270);
 	
+	
 	private float angle;
 
 	public Direction(float angle) {

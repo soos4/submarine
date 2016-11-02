@@ -16,4 +16,5 @@ public class Move {
 		return String.format("{\n\t\"speed\": %f\n\t\"turn\": %f\n}", speed, turn.getAngle());
 	}
 
+	
 }

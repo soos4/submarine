@@ -14,4 +14,5 @@ public class Shoot {
 		return String.format("{\n\t\"angle\": %f\n}", angle.getAngle()); 
 	}
 	
+	
 }

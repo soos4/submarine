@@ -10,6 +10,7 @@ public class MyJson {
 		JSONObject root = new JSONObject(tokener);
 		System.out.println(root.getString("page"));
 		
+		
 	}
 	
 	public static Long gameIDParser(String json) {
