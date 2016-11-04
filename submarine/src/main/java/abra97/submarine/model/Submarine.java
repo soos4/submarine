@@ -14,6 +14,8 @@ public class Submarine {
 	public static int MAX_ACCELERATION_PER_ROUND;
 	public static int MAX_SPEED;
 	
+	
+	
 	public static void initialize(String json) {
 		JSONTokener tokener = new JSONTokener(json);
 		JSONObject root = new JSONObject(tokener).getJSONObject("game").getJSONObject("mapConfiguration");
