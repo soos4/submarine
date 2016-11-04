@@ -23,7 +23,7 @@ public class Sonar {
 		EXTENDED_SONAR_COOLDOWN = root.getInt("extendedSonarCooldown");
 	}
 
-	public Collection<Entity> getEntities(String json) {
+	public static Collection<Entity> getEntities(String json) {
 		JSONTokener tokener = new JSONTokener(json);
 		JSONObject root = new JSONObject(tokener);
 		JSONArray arr = root.getJSONArray("entities");

@@ -1,17 +1,14 @@
 package abra97.submarine.model;
 
-public class Shoot {
-
-	private Direction angle;
+public class Shoot extends Action {
 
 	public Shoot(Direction angle) {
-		super();
-		this.angle = angle;
+		super(angle);
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("{\"angle\":%f}", angle.getAngle()); 
+		return String.format("{\"angle\":%f}", super.getAngle().getAngle()); 
 	}
 	
 	

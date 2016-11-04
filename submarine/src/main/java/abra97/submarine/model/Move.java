@@ -1,19 +1,17 @@
 package abra97.submarine.model;
 
-public class Move {
+public class Move extends Action {
 
 	private float speed;
-	private Direction turn;
 
 	public Move(float speed, Direction turn) {
-		super();
+		super(turn);
 		this.speed = speed;
-		this.turn = turn;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("{\"speed\":%f,\"turn\":%f}", speed, turn.getAngle());
+		return String.format("{\"speed\":%f,\"turn\":%f}", speed, super.getAngle().getAngle());
 	}
 
 	
