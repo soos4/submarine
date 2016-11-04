@@ -112,7 +112,7 @@ public final class HttpManager {
 		return null;
 	}
 
-	public static String getGameInfo(int gameId) {
+	public static String getGameInfo(Long gameId) {
 		try {
 			newConnection(defaultURL + "game/" + gameId);
 			sendGET();

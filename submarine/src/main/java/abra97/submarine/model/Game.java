@@ -3,6 +3,9 @@ package abra97.submarine.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import abra97.submarine.HttpManager;
 import abra97.submarine.MyJson;
 
@@ -30,6 +33,12 @@ public class Game {
 		super();
 		this.gameID = MyJson.gameIDParser(HttpManager.newGame());
 		
+		String json = HttpManager.getGameInfo(gameID);
+		
+		JSONTokener tokener = new JSONTokener(json);
+		JSONObject root = new JSONObject(tokener);
+		
+		this.
 	}
 
 	public Long getGameID() {
