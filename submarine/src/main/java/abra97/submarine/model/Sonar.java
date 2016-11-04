@@ -2,12 +2,11 @@ package abra97.submarine.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import org.w3c.dom.Entity;
+
 
 public class Sonar {
 
@@ -33,11 +32,11 @@ public class Sonar {
 		for (int i = 0; i < arr.length(); i++) {
 			JSONObject ent = arr.getJSONObject(i);
 			if (ent.getString("type").equals("Submarine")) {
-				Entity sub = (Entity) new Submarine(ent.getInt("id"), new Position(ent.getJSONObject("position").getDouble("x"), ent.getJSONObject("position").getDouble("y")), new Team(ent.getJSONObject("owner").getString("name")), ent.getDouble("velocity"), new Direction(ent.getDouble("angle")));
+				Entity sub = new Submarine(ent.getInt("id"), new Position(ent.getJSONObject("position").getDouble("x"), ent.getJSONObject("position").getDouble("y")), new Team(ent.getJSONObject("owner").getString("name")), ent.getDouble("velocity"), new Direction(ent.getDouble("angle")));
 				entities.add(sub);
 			}
 			if (ent.getString("type").equals("Torpedo")) {
-				Entity torpedo = (Entity) new Torpedo(ent.getInt("id"), new Position(ent.getJSONObject("position").getDouble("x"), ent.getJSONObject("position").getDouble("y")), new Team(ent.getJSONObject("owner").getString("name")), ent.getDouble("velocity"), new Direction(ent.getDouble("angle")));
+				Entity torpedo = new Torpedo(ent.getInt("id"), new Position(ent.getJSONObject("position").getDouble("x"), ent.getJSONObject("position").getDouble("y")), new Team(ent.getJSONObject("owner").getString("name")), ent.getDouble("velocity"), new Direction(ent.getDouble("angle")));
 				entities.add(torpedo);
 			}
 		}
