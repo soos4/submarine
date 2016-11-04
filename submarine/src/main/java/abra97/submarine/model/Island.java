@@ -17,6 +17,7 @@ public class Island {
 	@Override
 	public String toString() {
 		return "Island [center=" + center + "]";
+		
 	}
 
 	@Override

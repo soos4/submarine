@@ -24,6 +24,7 @@ public class MyJson {
 		JSONArray array = root.getJSONObject("game").getJSONObject("mapConfiguration").getJSONArray("islandPositions");
 		array.optJSONObject(0);
 		return null;
+		
 	}
 	
 }
