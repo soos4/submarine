@@ -26,15 +26,33 @@ public final class HttpManager {
 
 	}
 
-	private static void send(String urlParameters) {
+	private static void sendGET() {
+		//connection.setRequestProperty("Content-Length", Integer.toString(urlParameters.getBytes().length));
+		DataOutputStream us = null;
+		
+		try {
+			connection.setRequestMethod("GET");
+			connection.setDoOutput(false);
+			us = new DataOutputStream(connection.getOutputStream());
+			//us.writeBytes(urlParameters);
+			us.close();
+		} catch (IOException e) {
+			//e.printStackTrace();
+		}
+	}
+
+	private static void sendPOST(String urlParameters) {
 		connection.setRequestProperty("Content-Length", Integer.toString(urlParameters.getBytes().length));
 		DataOutputStream us = null;
+		
 		try {
+			connection.setRequestMethod("POST");
+			connection.setDoOutput(true);
 			us = new DataOutputStream(connection.getOutputStream());
 			us.writeBytes(urlParameters);
 			us.close();
 		} catch (IOException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -61,9 +79,7 @@ public final class HttpManager {
 	public static String newGame() {
 		try {
 			newConnection(defaultURL + "game");
-			connection.setRequestMethod("POST");
-			connection.setDoOutput(true);
-			send("");
+			sendPOST("");
 			return read();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -71,13 +87,11 @@ public final class HttpManager {
 
 		return null;
 	}
-	
+
 	public static String gameList() {
 		try {
 			newConnection(defaultURL + "game");
-			connection.setRequestMethod("GET");
-			connection.setDoOutput(false);
-			send("");
+			sendGET();
 			return read();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,13 +99,23 @@ public final class HttpManager {
 
 		return null;
 	}
-	
+
 	public static String connectGame(int gameId) {
 		try {
 			newConnection(defaultURL + "game/" + gameId);
-			connection.setRequestMethod("POST");
-			connection.setDoOutput(true);
-			send("");
+			sendPOST("");
+			return read();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public static String getGameInfo(Long gameId) {
+		try {
+			newConnection(defaultURL + "game/" + gameId);
+			sendGET();
 			return read();
 		} catch (Exception e) {
 			e.printStackTrace();
