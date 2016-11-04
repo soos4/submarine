@@ -18,5 +18,4 @@ public class Sonar {
 		EXTENDED_SONAR_ROUNDS = root.getInt("extendedSonarRounds");
 		EXTENDED_SONAR_COOLDOWN = root.getInt("extendedSonarCooldown");
 	}
-    
 }
