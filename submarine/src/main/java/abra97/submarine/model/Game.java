@@ -67,6 +67,8 @@ public class Game {
 	public void update() {
 		String gameJSON = HttpManager.getGameInfo(gameID);
 		
+		//System.out.println(gameJSON);
+		
 		JSONTokener tokener = new JSONTokener(gameJSON);
 		JSONObject root = new JSONObject(tokener);
 		
@@ -93,10 +95,16 @@ public class Game {
 		
 		String submarineJSON = HttpManager.getSubmarines(gameID);
 		submarines = (List<Submarine>) Submarine.getSubmarines(submarineJSON);
+		
+		islands = (List<Island>) Island.getIslands(gameJSON);
 	}
 	
 	public List<Submarine> getSubmarines() {
 		return submarines;
+	}
+
+	public List<Island> getIslands() {
+		return islands;
 	}
 
 	public String toString() {
