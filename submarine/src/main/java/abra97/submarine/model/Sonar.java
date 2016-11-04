@@ -2,11 +2,11 @@ package abra97.submarine.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
 
 public class Sonar {
 
@@ -35,7 +35,7 @@ public class Sonar {
 				Entity sub = new Submarine(ent.getInt("id"), new Position(ent.getJSONObject("position").getDouble("x"), ent.getJSONObject("position").getDouble("y")), new Team(ent.getJSONObject("owner").getString("name")), ent.getDouble("velocity"), new Direction(ent.getDouble("angle")));
 				entities.add(sub);
 			}
-			else if (ent.getString("type").equals("Torpedo")) {
+			if (ent.getString("type").equals("Torpedo")) {
 				Entity torpedo = new Torpedo(ent.getInt("id"), new Position(ent.getJSONObject("position").getDouble("x"), ent.getJSONObject("position").getDouble("y")), new Team(ent.getJSONObject("owner").getString("name")), ent.getDouble("velocity"), new Direction(ent.getDouble("angle")));
 				entities.add(torpedo);
 			}
