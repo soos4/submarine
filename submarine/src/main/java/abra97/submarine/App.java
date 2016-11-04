@@ -10,8 +10,9 @@ public class App
         System.out.println(HttpManager.gameList());
         //System.out.println(HttpManager.connectGame(751685318));
         MyJson.xyJsonParser();*/
-    	Game g = new Game();
+    	//Game g = new Game();
+    	//System.out.println(g.getGameID());
     	
-    	System.out.println(g.getGameID());
+    	
     }
 }

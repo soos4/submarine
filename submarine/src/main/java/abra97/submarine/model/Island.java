@@ -3,26 +3,20 @@ package abra97.submarine.model;
 public class Island {
 
 	private final Position center;
-	private final int radius;
+	public static int SIZE;
 
-	public Island(Position center, int radius) {
+	public Island(Position center) {
 		super();
 		this.center = center;
-		this.radius = radius;
 	}
 
 	public Position getCenter() {
 		return center;
 	}
 
-	public int getRadius() {
-		return radius;
-	}
-
-	
 	@Override
 	public String toString() {
-		return "Island [center=" + center + ", radius=" + radius + "]";
+		return "Island [center=" + center + "]";
 	}
 
 	@Override
@@ -30,7 +24,6 @@ public class Island {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((center == null) ? 0 : center.hashCode());
-		result = prime * result + radius;
 		return result;
 	}
 
@@ -47,8 +40,6 @@ public class Island {
 			if (other.center != null)
 				return false;
 		} else if (!center.equals(other.center))
-			return false;
-		if (radius != other.radius)
 			return false;
 		return true;
 	}
