@@ -100,7 +100,7 @@ public final class HttpManager {
 		return null;
 	}
 
-	public static String connectGame(int gameId) {
+	public static String connectGame(Long gameId) {
 		try {
 			newConnection(defaultURL + "game/" + gameId);
 			sendPOST("");

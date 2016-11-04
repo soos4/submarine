@@ -63,6 +63,10 @@ public class Game {
 	public Long getGameID() {
 		return gameID;
 	}
+	
+	public void connect() {
+		HttpManager.connectGame(gameID);
+	}
 
 	public void update() {
 		String gameJSON = HttpManager.getGameInfo(gameID);
@@ -75,14 +79,7 @@ public class Game {
 		JSONObject game = root.getJSONObject("game");
 		
 		this.round = game.getInt("round");
-		switch (game.getString("status")) {
-		case ("WAITING"):
-			this.status = GameStatus.WAITING;
-		case ("RUNNING"):
-			this.status = GameStatus.RUNNING;
-		case ("ENDED"):
-			this.status = GameStatus.ENDED;
-		}
+		this.status = GameStatus.valueOf(game.getString("status"));
 		
 		JSONObject scores = game.getJSONObject("scores");
 		
