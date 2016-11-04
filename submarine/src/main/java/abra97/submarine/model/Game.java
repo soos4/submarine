@@ -19,6 +19,9 @@ public class Game {
 	private int teamScore;
 	private int botScore;
 	
+	private final int mapX;
+	private final int mapY;
+	
 	private int round;
 	private final int roundLength;
 	private final int roundMax;
@@ -27,6 +30,7 @@ public class Game {
 	
 	private GameStatus status;
 	
+	private List<Submarine> submarines = new ArrayList<>();
 	private List<Island> islands = new ArrayList<>();
 
 	public Game() {
@@ -38,7 +42,17 @@ public class Game {
 		JSONTokener tokener = new JSONTokener(json);
 		JSONObject root = new JSONObject(tokener);
 		
-		this.
+		JSONObject game = root.getJSONObject("game");
+		JSONObject mapConfiguration = game.getJSONObject("mapConfiguration");
+		this.submarinesPerTeam = mapConfiguration.getInt("submarinesPerTeam");
+		
+		this.roundLength = mapConfiguration.getInt("roundLength");
+		this.roundMax = mapConfiguration.getInt("rounds");
+		
+		this.rateLimitedPenalty = mapConfiguration.getInt("rateLimitedPenalty");
+		
+		this.mapX = mapConfiguration.getInt("width");
+		this.mapY = mapConfiguration.getInt("height");
 	}
 
 	public Long getGameID() {
@@ -47,5 +61,12 @@ public class Game {
 
 	public void update() {
 		
+	}
+
+	public String toString() {
+		return "Game [gameID=" + gameID + ", teamCount=" + teamCount + ", submarinesPerTeam=" + submarinesPerTeam
+				+ ", teamScore=" + teamScore + ", botScore=" + botScore + ", mapX=" + mapX + ", mapY=" + mapY
+				+ ", round=" + round + ", roundLength=" + roundLength + ", roundMax=" + roundMax
+				+ ", rateLimitedPenalty=" + rateLimitedPenalty + ", status=" + status + "]";
 	}
 }
