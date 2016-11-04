@@ -3,7 +3,9 @@ package abra97.submarine.model;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-public class Torpedo {
+public class Torpedo extends Entity {
+
+	private int roundsMoved;
 
 	public static int RANGE;
 	public static int SPEED;
@@ -12,7 +14,16 @@ public class Torpedo {
 	public static int HIT_SCORE;
 	public static int DAMAGE;
 	public static int EXPLOSION_RADIUS;
-	
+
+	public Torpedo(int id, Position position, Team owner, double velocity, Direction angle, int roundsMoved) {
+		super(ObjectType.TORPEDO, id, position, owner, velocity, angle);
+		this.roundsMoved = roundsMoved;
+	}
+
+	public Torpedo(int id, Position position, Team owner, double velocity, Direction angle) {
+		this(id, position, owner, velocity, angle, 0);
+	}
+
 	public static void initialize(String json) {
 		JSONTokener tokener = new JSONTokener(json);
 		JSONObject root = new JSONObject(tokener).getJSONObject("game").getJSONObject("mapConfiguration");
@@ -24,5 +35,10 @@ public class Torpedo {
 		RANGE = root.getInt("torpedoRange");
 		SPEED = root.getInt("torpedoSpeed");
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Torpedo [roundsMoved=" + roundsMoved + ", base=" + super.toString() + "]";
+	}
+
 }

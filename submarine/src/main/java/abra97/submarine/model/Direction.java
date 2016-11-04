@@ -21,5 +21,10 @@ public class Direction {
 	public void setAngle(double angle) {
 		this.angle = angle;
 	}
+
+	@Override
+	public String toString() {
+		return "Direction [angle=" + angle + "]";
+	}
 	
 }

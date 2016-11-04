@@ -13,7 +13,7 @@ public class Move {
 
 	@Override
 	public String toString() {
-		return String.format("{\n\t\"speed\": %f\n\t\"turn\": %f\n}", speed, turn.getAngle());
+		return String.format("{\"speed\":%f,\"turn\":%f}", speed, turn.getAngle());
 	}
 
 	
