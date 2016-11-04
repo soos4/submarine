@@ -11,7 +11,7 @@ public class Shoot {
 	
 	@Override
 	public String toString() {
-		return String.format("{\n\t\"angle\": %f\n}", angle.getAngle()); 
+		return String.format("{\"angle\":%f}", angle.getAngle()); 
 	}
 	
 	
