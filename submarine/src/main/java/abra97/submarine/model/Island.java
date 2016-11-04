@@ -1,5 +1,12 @@
 package abra97.submarine.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 public class Island {
 
 	private final Position center;
@@ -43,6 +50,24 @@ public class Island {
 		} else if (!center.equals(other.center))
 			return false;
 		return true;
+	}
+	
+	public static void initialize(String json) {
+		JSONTokener tokener = new JSONTokener(json);
+		JSONObject root = new JSONObject(tokener).getJSONObject("game").getJSONObject("mapConfiguration");
+		SIZE = root.getInt("islandSize");
+	}
+	
+	public static Collection<Island> getIslands(String json) {
+		JSONTokener tokener = new JSONTokener(json);
+		JSONObject root = new JSONObject(tokener).getJSONObject("game").getJSONObject("mapConfiguration");
+		JSONArray array = root.getJSONArray("islandPositions");
+		Collection<Island> ret = new ArrayList<>();
+		for (int i = 0; i < array.length(); i++) {
+			JSONObject tmp = array.getJSONObject(i);
+			ret.add(new Island(new Position(tmp.getInt("x"), tmp.getInt("y"))));
+		}
+		return ret;
 	}
 
 }

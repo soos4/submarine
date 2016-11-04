@@ -6,5 +6,8 @@ public class Submarine {
 	private Position position;
 	private Team owner;
 	
+	public static int MAX_STEERING_PER_ROUND;
+	public static int MAX_ACCELERATION_PER_ROUND;
+	public static int MAX_SPEED;
 	
 }
