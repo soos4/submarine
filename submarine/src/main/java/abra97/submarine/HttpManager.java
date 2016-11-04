@@ -123,4 +123,16 @@ public final class HttpManager {
 
 		return null;
 	}
+	
+	public static String getSubmarines(Long gameId) {
+		try {
+			newConnection(defaultURL + "game/" + gameId + "/submarine");
+			sendGET();
+			return read();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
 }

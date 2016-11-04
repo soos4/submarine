@@ -32,8 +32,8 @@ public class Submarine {
 		velocity = root.getDouble("velocity");
 		angle = new Direction(root.getDouble("angle"));
 		hp = root.getInt("hp");
-		sonarCoolDown = root.getInt("sonarCoolDown");
-		torpedoCoolDown = root.getInt("torpedoCoolDown");
+		sonarCoolDown = root.getInt("sonarCooldown");
+		torpedoCoolDown = root.getInt("torpedoCooldown");
 		sonarExtended = root.getInt("sonarExtended");
 	}
 

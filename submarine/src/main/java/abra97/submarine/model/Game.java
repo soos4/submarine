@@ -65,7 +65,38 @@ public class Game {
 	}
 
 	public void update() {
+		String gameJSON = HttpManager.getGameInfo(gameID);
 		
+		JSONTokener tokener = new JSONTokener(gameJSON);
+		JSONObject root = new JSONObject(tokener);
+		
+		JSONObject game = root.getJSONObject("game");
+		
+		this.round = game.getInt("round");
+		switch (game.getString("status")) {
+		case ("WAITING"):
+			this.status = GameStatus.WAITING;
+		case ("RUNNING"):
+			this.status = GameStatus.RUNNING;
+		case ("ENDED"):
+			this.status = GameStatus.ENDED;
+		}
+		
+		JSONObject scores = game.getJSONObject("scores");
+		
+		this.teamScore = scores.getJSONObject("scores").getInt("97esÁbra");
+		this.botScore = scores.getJSONObject("scores").getInt("BOT");
+		
+		JSONObject mapConfiguration = game.getJSONObject("mapConfiguration");
+		
+		this.teamCount = mapConfiguration.getInt("teamCount");
+		
+		String submarineJSON = HttpManager.getSubmarines(gameID);
+		submarines = (List<Submarine>) Submarine.getSubmarines(submarineJSON);
+	}
+	
+	public List<Submarine> getSubmarines() {
+		return submarines;
 	}
 
 	public String toString() {
