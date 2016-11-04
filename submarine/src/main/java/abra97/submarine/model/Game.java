@@ -53,6 +53,11 @@ public class Game {
 		
 		this.mapX = mapConfiguration.getInt("width");
 		this.mapY = mapConfiguration.getInt("height");
+		
+		Submarine.initialize(json);
+		Island.initialize(json);
+		Sonar.initialize(json);
+		Torpedo.initialize(json);
 	}
 
 	public Long getGameID() {
