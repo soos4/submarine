@@ -7,19 +7,18 @@ public class Direction {
 	public static final Direction WEST = new Direction(180);
 	public static final Direction SOUTH = new Direction(270);
 	
-	
-	private float angle;
+	private double angle;
 
-	public Direction(float angle) {
+	public Direction(double angle) {
 		super();
 		this.angle = angle;
 	}
 
-	public float getAngle() {
+	public double getAngle() {
 		return angle;
 	}
 
-	public void setAngle(float angle) {
+	public void setAngle(double angle) {
 		this.angle = angle;
 	}
 	

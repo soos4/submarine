@@ -65,7 +65,7 @@ public class Island {
 		Collection<Island> ret = new ArrayList<>();
 		for (int i = 0; i < array.length(); i++) {
 			JSONObject tmp = array.getJSONObject(i);
-			ret.add(new Island(new Position(tmp.getInt("x"), tmp.getInt("y"))));
+			ret.add(new Island(new Position(tmp.getDouble("x"), tmp.getDouble("y"))));
 		}
 		return ret;
 	}
