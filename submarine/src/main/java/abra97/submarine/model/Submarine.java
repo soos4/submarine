@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import abra97.submarine.HttpManager;
+
 public class Submarine extends Entity {
 
 	private int hp;
@@ -68,6 +70,30 @@ public class Submarine extends Entity {
 		MAX_ACCELERATION_PER_ROUND = root.getInt("maxAccelerationPerRound");
 		MAX_SPEED = root.getInt("maxSpeed");
 		MAX_STEERING_PER_ROUND = root.getInt("maxSteeringPerRound");
+	}
+	
+	public boolean move(Long gameId, double speed, double turn) {
+		String request = "{ \"speed\" " + speed + "\"turn\" " + turn + " }";
+		
+		String response = HttpManager.move(gameId, id, request);
+		JSONTokener tokener = new JSONTokener(response);
+		JSONObject r = new JSONObject(tokener);
+		
+		if (r.getString("message").equals("OK"))
+			return true;
+		return false;
+	}
+	
+	public boolean shoot(Long gameId, double angle) {
+		String request = "{ \"angle\" " + angle + " }";
+		
+		String response = HttpManager.shoot(gameId, id, request);
+		JSONTokener tokener = new JSONTokener(response);
+		JSONObject r = new JSONObject(tokener);
+		
+		if (r.getString("message").equals("OK"))
+			return true;
+		return false;
 	}
 
 	@Override

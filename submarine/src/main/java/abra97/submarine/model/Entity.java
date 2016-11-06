@@ -3,7 +3,7 @@ package abra97.submarine.model;
 public abstract class Entity {
 
 	private ObjectType type;
-	private int id;
+	protected int id;
 	private Position position;
 	private Team owner;
 	private double velocity;

@@ -135,4 +135,28 @@ public final class HttpManager {
 
 		return null;
 	}
+	
+	public static String move(Long gameId, int submarineId, String request) {
+		try {
+			newConnection(defaultURL + "game/" + gameId + "/submarine/" + submarineId + "/move");
+			sendPOST(request);
+			return read();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public static String shoot(Long gameId, int submarineId, String request) {
+		try {
+			newConnection(defaultURL + "game/" + gameId + "/submarine/" + submarineId + "/shoot");
+			sendPOST(request);
+			return read();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
 }
