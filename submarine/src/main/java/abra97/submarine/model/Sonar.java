@@ -32,14 +32,14 @@ public class Sonar {
 			JSONObject ent = arr.getJSONObject(i);
 			if (ent.getString("type").equals("Submarine")) {
 				Entity sub = new Submarine(ent.getInt("id"),
-						new Position(ent.getJSONObject("position").getDouble("x"),
+						new Point(ent.getJSONObject("position").getDouble("x"),
 								ent.getJSONObject("position").getDouble("y")),
 						new Team(ent.getJSONObject("owner").getString("name")), ent.getDouble("velocity"),
 						new Direction(ent.getDouble("angle")));
 				entities.add(sub);
 			} else if (ent.getString("type").equals("Torpedo")) {
 				Entity torpedo = new Torpedo(ent.getInt("id"),
-						new Position(ent.getJSONObject("position").getDouble("x"),
+						new Point(ent.getJSONObject("position").getDouble("x"),
 								ent.getJSONObject("position").getDouble("y")),
 						new Team(ent.getJSONObject("owner").getString("name")), ent.getDouble("velocity"),
 						new Direction(ent.getDouble("angle")));

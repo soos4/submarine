@@ -9,15 +9,15 @@ import org.json.JSONTokener;
 
 public class Island {
 
-	private final Position center;
+	private final Point center;
 	public static int SIZE;
 
-	public Island(Position center) {
+	public Island(Point center) {
 		super();
 		this.center = center;
 	}
 
-	public Position getCenter() {
+	public Point getCenter() {
 		return center;
 	}
 
@@ -65,7 +65,7 @@ public class Island {
 		Collection<Island> ret = new ArrayList<>();
 		for (int i = 0; i < array.length(); i++) {
 			JSONObject tmp = array.getJSONObject(i);
-			ret.add(new Island(new Position(tmp.getDouble("x"), tmp.getDouble("y"))));
+			ret.add(new Island(new Point(tmp.getDouble("x"), tmp.getDouble("y"))));
 		}
 		return ret;
 	}

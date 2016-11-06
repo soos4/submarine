@@ -4,12 +4,12 @@ public abstract class Entity {
 
 	private ObjectType type;
 	protected int id;
-	private Position position;
+	private Point position;
 	private Team owner;
 	private double velocity;
 	private Direction angle;
 
-	public Entity(ObjectType type, int id, Position position, Team owner, double velocity, Direction angle) {
+	public Entity(ObjectType type, int id, Point position, Team owner, double velocity, Direction angle) {
 		super();
 		this.type = type;
 		this.id = id;
