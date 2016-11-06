@@ -2,12 +2,12 @@ package abra97.submarine.model;
 
 public abstract class Entity {
 
-	private final ObjectType type;
-	private final int id;
-	private final Point position;
-	private final Team owner;
-	private final double velocity;
-	private final Direction angle;
+	private ObjectType type;
+	protected int id;
+	private Point position;
+	private Team owner;
+	private double velocity;
+	private Direction angle;
 
 	public Entity(ObjectType type, int id, Point position, Team owner, double velocity, Direction angle) {
 		super();
