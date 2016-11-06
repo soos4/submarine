@@ -11,10 +11,12 @@ public class Island {
 
 	private final Point center;
 	public static int SIZE;
+	private static Collection<Island> islands;
 
 	public Island(Point center) {
 		super();
 		this.center = center;
+		islands = new ArrayList<>();
 	}
 
 	public Point getCenter() {
@@ -56,18 +58,15 @@ public class Island {
 		JSONTokener tokener = new JSONTokener(json);
 		JSONObject root = new JSONObject(tokener).getJSONObject("game").getJSONObject("mapConfiguration");
 		SIZE = root.getInt("islandSize");
-	}
-	
-	public static Collection<Island> getIslands(String json) {
-		JSONTokener tokener = new JSONTokener(json);
-		JSONObject root = new JSONObject(tokener).getJSONObject("game").getJSONObject("mapConfiguration");
 		JSONArray array = root.getJSONArray("islandPositions");
-		Collection<Island> ret = new ArrayList<>();
 		for (int i = 0; i < array.length(); i++) {
 			JSONObject tmp = array.getJSONObject(i);
-			ret.add(new Island(new Point(tmp.getDouble("x"), tmp.getDouble("y"))));
+			islands.add(new Island(new Point(tmp.getDouble("x"), tmp.getDouble("y"))));
 		}
-		return ret;
+	}
+	
+	public static Collection<Island> getIslands() {
+		return islands;
 	}
 
 }

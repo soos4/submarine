@@ -28,23 +28,23 @@ public class Sonar {
 		JSONObject root = new JSONObject(tokener);
 		JSONArray arr = root.getJSONArray("entities");
 		Collection<Entity> entities = new ArrayList<>();
+		Entity entity = null;
 		for (int i = 0; i < arr.length(); i++) {
 			JSONObject ent = arr.getJSONObject(i);
 			if (ent.getString("type").equals("Submarine")) {
-				Entity sub = new Submarine(ent.getInt("id"),
+				entity = new Submarine(ent.getInt("id"),
 						new Point(ent.getJSONObject("position").getDouble("x"),
 								ent.getJSONObject("position").getDouble("y")),
 						new Team(ent.getJSONObject("owner").getString("name")), ent.getDouble("velocity"),
 						new Direction(ent.getDouble("angle")));
-				entities.add(sub);
 			} else if (ent.getString("type").equals("Torpedo")) {
-				Entity torpedo = new Torpedo(ent.getInt("id"),
+				entity = new Torpedo(ent.getInt("id"),
 						new Point(ent.getJSONObject("position").getDouble("x"),
 								ent.getJSONObject("position").getDouble("y")),
 						new Team(ent.getJSONObject("owner").getString("name")), ent.getDouble("velocity"),
 						new Direction(ent.getDouble("angle")));
-				entities.add(torpedo);
 			}
+			entities.add(entity);
 		}
 		return entities;
 	}

@@ -5,7 +5,7 @@ import org.json.JSONTokener;
 
 public class Torpedo extends Entity {
 
-	private int roundsMoved;
+	private final int roundsMoved;
 
 	public static int RANGE;
 	public static int SPEED;
@@ -39,6 +39,10 @@ public class Torpedo extends Entity {
 	@Override
 	public String toString() {
 		return "Torpedo [roundsMoved=" + roundsMoved + ", base=" + super.toString() + "]";
+	}
+
+	public int getRoundsMoved() {
+		return roundsMoved;
 	}
 
 }

@@ -59,5 +59,13 @@ public class Point {
 	public String toString() {
 		return "Position [x=" + x + ", y=" + y + "]";
 	}
+	
+	public double getDistance(Point p) {
+		return getDistance(this, p);
+	}
+	
+	public static double getDistance(Point p1, Point p2) {
+		return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+	}
 
 }

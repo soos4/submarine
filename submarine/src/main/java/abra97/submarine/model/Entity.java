@@ -2,12 +2,12 @@ package abra97.submarine.model;
 
 public abstract class Entity {
 
-	private ObjectType type;
-	private int id;
-	private Point position;
-	private Team owner;
-	private double velocity;
-	private Direction angle;
+	private final ObjectType type;
+	private final int id;
+	private final Point position;
+	private final Team owner;
+	private final double velocity;
+	private final Direction angle;
 
 	public Entity(ObjectType type, int id, Point position, Team owner, double velocity, Direction angle) {
 		super();
@@ -54,6 +54,30 @@ public abstract class Entity {
 	public String toString() {
 		return "Entity [type=" + type + ", id=" + id + ", position=" + position + ", owner=" + owner + ", velocity="
 				+ velocity + ", angle=" + angle + "]";
+	}
+
+	public ObjectType getType() {
+		return type;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public Point getPosition() {
+		return position;
+	}
+
+	public Team getOwner() {
+		return owner;
+	}
+
+	public double getVelocity() {
+		return velocity;
+	}
+
+	public Direction getAngle() {
+		return angle;
 	}
 
 }

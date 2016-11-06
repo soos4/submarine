@@ -31,7 +31,6 @@ public class Game {
 	private GameStatus status;
 	
 	private List<Submarine> submarines = new ArrayList<>();
-	private List<Island> islands = new ArrayList<>();
 
 	public Game() {
 		super();
@@ -92,16 +91,10 @@ public class Game {
 		
 		String submarineJSON = HttpManager.getSubmarines(gameID);
 		submarines = (List<Submarine>) Submarine.getSubmarines(submarineJSON);
-		
-		islands = (List<Island>) Island.getIslands(gameJSON);
 	}
 	
 	public List<Submarine> getSubmarines() {
 		return submarines;
-	}
-
-	public List<Island> getIslands() {
-		return islands;
 	}
 
 	public String toString() {

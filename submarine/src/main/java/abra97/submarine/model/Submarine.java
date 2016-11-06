@@ -9,10 +9,10 @@ import org.json.JSONTokener;
 
 public class Submarine extends Entity {
 
-	private int hp;
-	private int sonarCoolDown;
-	private int torpedoCoolDown;
-	private int sonarExtended;
+	private final int hp;
+	private final int sonarCoolDown;
+	private final int torpedoCoolDown;
+	private final int sonarExtended;
 
 	public static int COUNT_PER_TEAM;
 	public static int MAX_STEERING_PER_ROUND;
@@ -27,15 +27,14 @@ public class Submarine extends Entity {
 		this.torpedoCoolDown = torpedoCoolDown;
 		this.sonarExtended = sonarExtended;
 	}
-	
+
 	public Submarine(int id, Point position, Team owner, double velocity, Direction angle) {
 		this(id, position, owner, velocity, angle, 0, 0, 0, 0);
 	}
 
 	private Submarine(JSONObject root) {
 		super(ObjectType.SUBMARINE, root.getInt("id"),
-				new Point(root.getJSONObject("position").getDouble("x"),
-						root.getJSONObject("position").getDouble("y")),
+				new Point(root.getJSONObject("position").getDouble("x"), root.getJSONObject("position").getDouble("y")),
 				new Team(root.getJSONObject("owner").getString("name")), root.getDouble("velocity"),
 				new Direction(root.getDouble("angle")));
 		hp = root.getInt("hp");
@@ -76,7 +75,30 @@ public class Submarine extends Entity {
 				+ ", sonarExtended=" + sonarExtended + ", base=" + super.toString() + "]";
 	}
 	
-	public void shoot(String json) {
+	public int getHp() {
+		return hp;
+	}
+
+	public int getSonarCoolDown() {
+		return sonarCoolDown;
+	}
+
+	public int getTorpedoCoolDown() {
+		return torpedoCoolDown;
+	}
+
+	public int getSonarExtended() {
+		return sonarExtended;
+	}
+	
+	public Collection<Action> react(String json) {
+		Collection<Entity> entities = Sonar.getEntities(json);
+		return null;
+	}
+	
+	private static class AI {
+		
+		
 		
 	}
 
