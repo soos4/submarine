@@ -15,12 +15,12 @@ public class Torpedo extends Entity {
 	public static int DAMAGE;
 	public static int EXPLOSION_RADIUS;
 
-	public Torpedo(int id, Position position, Team owner, double velocity, Direction angle, int roundsMoved) {
+	public Torpedo(int id, Point position, Team owner, double velocity, Direction angle, int roundsMoved) {
 		super(ObjectType.TORPEDO, id, position, owner, velocity, angle);
 		this.roundsMoved = roundsMoved;
 	}
 
-	public Torpedo(int id, Position position, Team owner, double velocity, Direction angle) {
+	public Torpedo(int id, Point position, Team owner, double velocity, Direction angle) {
 		this(id, position, owner, velocity, angle, 0);
 	}
 

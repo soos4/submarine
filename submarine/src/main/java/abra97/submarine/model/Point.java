@@ -1,11 +1,11 @@
 package abra97.submarine.model;
 
-public class Position {
+public class Point {
 
 	private double x;
 	private double y;
 
-	public Position(double x, double y) {
+	public Point(double x, double y) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -47,7 +47,7 @@ public class Position {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Position other = (Position) obj;
+		Point other = (Point) obj;
 		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
 			return false;
 		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))

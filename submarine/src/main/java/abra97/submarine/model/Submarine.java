@@ -19,7 +19,7 @@ public class Submarine extends Entity {
 	public static int MAX_ACCELERATION_PER_ROUND;
 	public static int MAX_SPEED;
 
-	public Submarine(int id, Position position, Team owner, double velocity, Direction angle, int hp, int sonarCoolDown,
+	public Submarine(int id, Point position, Team owner, double velocity, Direction angle, int hp, int sonarCoolDown,
 			int torpedoCoolDown, int sonarExtended) {
 		super(ObjectType.SUBMARINE, id, position, owner, velocity, angle);
 		this.hp = hp;
@@ -28,13 +28,13 @@ public class Submarine extends Entity {
 		this.sonarExtended = sonarExtended;
 	}
 	
-	public Submarine(int id, Position position, Team owner, double velocity, Direction angle) {
+	public Submarine(int id, Point position, Team owner, double velocity, Direction angle) {
 		this(id, position, owner, velocity, angle, 0, 0, 0, 0);
 	}
 
 	private Submarine(JSONObject root) {
 		super(ObjectType.SUBMARINE, root.getInt("id"),
-				new Position(root.getJSONObject("position").getDouble("x"),
+				new Point(root.getJSONObject("position").getDouble("x"),
 						root.getJSONObject("position").getDouble("y")),
 				new Team(root.getJSONObject("owner").getString("name")), root.getDouble("velocity"),
 				new Direction(root.getDouble("angle")));
@@ -52,7 +52,7 @@ public class Submarine extends Entity {
 		for (int i = 0; i < array.length(); i++) {
 			JSONObject root = array.getJSONObject(i);
 			ret.add(new Submarine(root.getInt("id"),
-					new Position(root.getJSONObject("position").getDouble("x"),
+					new Point(root.getJSONObject("position").getDouble("x"),
 							root.getJSONObject("position").getDouble("y")),
 					new Team(root.getJSONObject("owner").getString("name")), root.getDouble("velocity"),
 					new Direction(root.getDouble("angle")), root.getInt("hp"), root.getInt("sonarCooldown"),
@@ -74,6 +74,10 @@ public class Submarine extends Entity {
 	public String toString() {
 		return "Submarine [hp=" + hp + ", sonarCoolDown=" + sonarCoolDown + ", torpedoCoolDown=" + torpedoCoolDown
 				+ ", sonarExtended=" + sonarExtended + ", base=" + super.toString() + "]";
+	}
+	
+	public void shoot(String json) {
+		
 	}
 
 }
