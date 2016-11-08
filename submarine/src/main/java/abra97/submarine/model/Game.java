@@ -19,8 +19,16 @@ public class Game {
 	private int teamScore;
 	private int botScore;
 	
-	private final int mapX;
-	private final int mapY;
+	public static int getMapX() {
+		return mapX;
+	}
+
+	public static int getMapY() {
+		return mapY;
+	}
+
+	private static int mapX;
+	private static int mapY;
 	
 	private int round;
 	private final int roundLength;
@@ -62,6 +70,14 @@ public class Game {
 
 	public Long getGameID() {
 		return gameID;
+	}
+	
+	public GameStatus getStatus() {
+		return status;
+	}
+	
+	public int getRoundLength() {
+		return roundLength;
 	}
 	
 	public void connect() {

@@ -126,7 +126,8 @@ public class Submarine extends Entity {
 		return null;
 	}
 
-	private boolean mustAvoidCollision(Collection<Entity> entities, Collection<Island> islands) {
+	private double mustAvoidCollision(Collection<Entity> entities, Collection<Island> islands) {
+		double chosenAngle = 1000;
 		for (Entity entity : entities) {
 			if (entity.getType() == ObjectType.TORPEDO) {
 				Torpedo t = (Torpedo) entity;
@@ -139,17 +140,49 @@ public class Submarine extends Entity {
 						pos.getY() + (Torpedo.RANGE - t.getRoundsMoved()) * Math.sin(angle));
 				if (Point.getCircleLineIntersectionPoint(pos, newPos, getPosition(), Submarine.SIZE).isEmpty())
 					continue;
-				
-				double anglePlus90 = angle + 90 > 360 ? angle + 90 - 360 : angle + 90;
-				double angleMinus90 = angle - 90 < 0 ? angle - 90 + 360 : angle - 90;
-				double p90psteer = Math.abs(anglePlus90 - (getAngle().getAngle() + MAX_STEERING_PER_ROUND));
-				double p90msteer = Math.abs(anglePlus90 - (getAngle().getAngle() - MAX_STEERING_PER_ROUND));
+
+				if (angle + 90 < getAngle().getAngle() + MAX_STEERING_PER_ROUND
+						&& angle + 90 > getAngle().getAngle() - MAX_STEERING_PER_ROUND)
+					chosenAngle = angle + 90;
+				else if (angle - 90 < getAngle().getAngle() + MAX_STEERING_PER_ROUND
+						&& angle - 90 > getAngle().getAngle() - MAX_STEERING_PER_ROUND)
+					chosenAngle = angle - 90;
+				else {
+					double maxSteeringPlus = getAngle().getAngle() + MAX_STEERING_PER_ROUND;
+					double maxSteeringMinus = getAngle().getAngle() - MAX_STEERING_PER_ROUND;
+					if ((Math.abs(maxSteeringPlus - (angle + 90)) < Math.abs(maxSteeringMinus - (angle + 90))
+							&& Math.abs(maxSteeringPlus - (angle + 90)) < Math.abs(maxSteeringMinus - (angle - 90)))
+							|| (Math.abs(maxSteeringPlus - (angle - 90)) < Math.abs(maxSteeringMinus - (angle + 90))
+									&& Math.abs(maxSteeringPlus - (angle - 90)) < Math
+											.abs(maxSteeringMinus - (angle - 90)))) {
+						if (maxSteeringPlus > 360)
+							maxSteeringPlus -= 360;
+						if (!troubleInChoosenAngle(maxSteeringPlus)) {
+							chosenAngle = maxSteeringPlus;
+							break;
+						}
+						else {
+							if (maxSteeringMinus > 360)
+								maxSteeringMinus -= 360;
+							chosenAngle = maxSteeringMinus;
+							break;
+						}
+					}
+				}
 			}
 		}
-		return false;
+		return chosenAngle;
 	}
-	
-	private boolean troubleInIdk() {
+
+	private boolean troubleInChoosenAngle(double angle) {
+		Point newPos = new Point(getPosition().getX() + getVelocity() * 2 * Math.cos(angle),
+				getPosition().getY() + getVelocity() * 2 * Math.sin(angle));
+		for (Island island : Island.getIslands()) {
+			if (!Point.getCircleLineIntersectionPoint(getPosition(), newPos, island.getCenter(), Island.SIZE).isEmpty())
+				return true;
+		}
+		if (newPos.getX() >= Game.getMapX() || newPos.getX() <= 0 || newPos.getY() >= Game.getMapY() || newPos.getY() <= 0)
+			return true;
 		return false;
 	}
 
