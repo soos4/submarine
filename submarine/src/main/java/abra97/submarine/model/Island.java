@@ -11,7 +11,7 @@ public class Island {
 
 	private final Point center;
 	public static int SIZE;
-	private static Collection<Island> islands;
+	private static Collection<Island> islands = new ArrayList<>();
 
 	public Island(Point center) {
 		super();

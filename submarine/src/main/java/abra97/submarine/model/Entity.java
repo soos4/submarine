@@ -80,4 +80,10 @@ public abstract class Entity {
 		return angle;
 	}
 
+	public Point nextPosition() {
+		Point p = new Point(position.getX() + Math.cos(angle.getAngle()) * velocity,
+				position.getY() + Math.sin(angle.getAngle() * velocity));
+		return p;
+	}
+
 }

@@ -35,9 +35,10 @@ public class Game {
 	public Game() {
 		super();
 		this.gameID = MyJson.gameIDParser(HttpManager.newGame());
+		connect();
 		
 		String json = HttpManager.getGameInfo(gameID);
-		
+		System.out.println(json);
 		JSONTokener tokener = new JSONTokener(json);
 		JSONObject root = new JSONObject(tokener);
 		
@@ -70,7 +71,7 @@ public class Game {
 	public void update() {
 		String gameJSON = HttpManager.getGameInfo(gameID);
 		
-		//System.out.println(gameJSON);
+		System.out.println(gameJSON);
 		
 		JSONTokener tokener = new JSONTokener(gameJSON);
 		JSONObject root = new JSONObject(tokener);
@@ -91,6 +92,10 @@ public class Game {
 		
 		String submarineJSON = HttpManager.getSubmarines(gameID);
 		submarines = (List<Submarine>) Submarine.getSubmarines(submarineJSON);
+		System.out.println(submarines.get(0).getAngle());
+		System.out.println(submarines.get(0).getPosition());
+		System.out.println(submarines.get(1).getAngle());
+		System.out.println(submarines.get(1).getPosition());
 	}
 	
 	public List<Submarine> getSubmarines() {
