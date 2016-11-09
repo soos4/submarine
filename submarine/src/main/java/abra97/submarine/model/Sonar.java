@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import abra97.submarine.HttpManager;
+
 public class Sonar {
 
 	public static int SONAR_RANGE;
@@ -23,7 +25,8 @@ public class Sonar {
 		EXTENDED_SONAR_COOLDOWN = root.getInt("extendedSonarCooldown");
 	}
 
-	public static Collection<Entity> getEntities(String json) {
+	public static Collection<Entity> getEntities(Long gameId, int submarineId) {
+		String json = HttpManager.getSonarData(gameId, submarineId);
 		JSONTokener tokener = new JSONTokener(json);
 		JSONObject root = new JSONObject(tokener);
 		JSONArray arr = root.getJSONArray("entities");
@@ -45,6 +48,7 @@ public class Sonar {
 						new Direction(ent.getDouble("angle")));
 			}
 			entities.add(entity);
+			System.out.println("Sonar entity("+submarineId+"): " + entity);
 		}
 		return entities;
 	}

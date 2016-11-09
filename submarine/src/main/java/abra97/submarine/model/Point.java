@@ -14,6 +14,11 @@ public class Point {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public Point(Point p) {
+		this.x = p.x;
+		this.y = p.y;
+	}
 
 	public double getX() {
 		return x;
@@ -108,5 +113,14 @@ public class Point {
                 - baY * abScalingFactor2);
         return Arrays.asList(p1, p2);
     }
+	
+	public static Point getPositionAfterTurns(Point pos, Direction dir, int turns, double velocity) {
+		Point newPos = new Point(pos);
+		for (int i = 0; i < turns; i++) {
+			newPos = new Point(newPos.getX() + Math.cos(dir.getAngle()) * velocity,
+					newPos.getY() + Math.sin(dir.getAngle() * velocity));
+		}
+		return newPos;
+	}
 
 }

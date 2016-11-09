@@ -1,9 +1,9 @@
 package abra97.submarine.model;
 
 public class Shoot extends Action {
-
+	
 	public Shoot(Direction angle) {
-		super(angle);
+		super(angle, Torpedo.SPEED);
 	}
 	
 	@Override

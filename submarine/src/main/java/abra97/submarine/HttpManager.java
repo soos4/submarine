@@ -43,6 +43,7 @@ public final class HttpManager {
 
 	private static void sendPOST(String urlParameters) {
 		connection.setRequestProperty("Content-Length", Integer.toString(urlParameters.getBytes().length));
+		connection.setRequestProperty("Content-Type", "application/json; charset=utf8");
 		DataOutputStream us = null;
 		
 		try {
@@ -137,6 +138,7 @@ public final class HttpManager {
 	}
 	
 	public static String move(Long gameId, int submarineId, String request) {
+		System.out.println("Move("+submarineId+"): " + request);
 		try {
 			newConnection(defaultURL + "game/" + gameId + "/submarine/" + submarineId + "/move");
 			sendPOST(request);
@@ -144,11 +146,12 @@ public final class HttpManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		return null;
 	}
 	
 	public static String shoot(Long gameId, int submarineId, String request) {
+		System.out.println("Shoot("+submarineId+"): " + request);
 		try {
 			newConnection(defaultURL + "game/" + gameId + "/submarine/" + submarineId + "/shoot");
 			sendPOST(request);
@@ -156,7 +159,20 @@ public final class HttpManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return null;
+	}
+	
+	public static String getSonarData(Long gameId, int submarineId) {
+		try {
+			newConnection(defaultURL + "game/" + gameId + "/submarine/" + submarineId + "/sonar");
+			sendGET();
+			return read();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return null;
 	}
+ 
 }

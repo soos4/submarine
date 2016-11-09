@@ -108,10 +108,13 @@ public class Game {
 		
 		String submarineJSON = HttpManager.getSubmarines(gameID);
 		submarines = (List<Submarine>) Submarine.getSubmarines(submarineJSON);
-		System.out.println(submarines.get(0).getAngle());
-		System.out.println(submarines.get(0).getPosition());
-		System.out.println(submarines.get(1).getAngle());
-		System.out.println(submarines.get(1).getPosition());
+		
+		System.out.println("submarine count: "+submarines.size());
+		for (Submarine submarine : submarines) {
+			System.out.println(submarine);
+			submarine.react(gameID);
+			
+		}
 	}
 	
 	public List<Submarine> getSubmarines() {

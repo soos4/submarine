@@ -3,6 +3,7 @@ package abra97.submarine.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Stack;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -75,7 +76,7 @@ public class Submarine extends Entity {
 	}
 
 	public boolean move(Long gameId, double speed, double turn) {
-		String request = "{ \"speed\" " + speed + "\"turn\" " + turn + " }";
+		String request = "{\"speed\":" + speed + ",\"turn\":" + turn + "}";
 
 		String response = HttpManager.move(gameId, id, request);
 		JSONTokener tokener = new JSONTokener(response);
@@ -87,7 +88,10 @@ public class Submarine extends Entity {
 	}
 
 	public boolean shoot(Long gameId, double angle) {
-		String request = "{ \"angle\" " + angle + " }";
+		JSONObject obj = new JSONObject();
+		obj.put("angle", angle);
+		//String request = "{\"angle\":" + angle + "}";
+		String request = obj.toString();
 
 		String response = HttpManager.shoot(gameId, id, request);
 		JSONTokener tokener = new JSONTokener(response);
@@ -120,13 +124,70 @@ public class Submarine extends Entity {
 		return sonarExtended;
 	}
 
-	public Collection<Action> react(String json) {
-		Collection<Entity> entities = Sonar.getEntities(json);
+	public void react(Long gameId) {
+		Collection<Entity> entities = Sonar.getEntities(gameId, id);
 		Collection<Island> islands = Island.getIslands();
-		return null;
+		double move = mustAvoidCollision(entities);
+		if (move != 1000)
+			move(gameId, Submarine.MAX_ACCELERATION_PER_ROUND, move);
+		else {
+			move = mustMove(entities);
+			if (move != 1000) {
+				if (mustSlowDown(entities, move))
+					move(gameId, -Submarine.MAX_ACCELERATION_PER_ROUND, move);
+				else
+					move(gameId, Submarine.MAX_ACCELERATION_PER_ROUND, move);
+			}
+		}
+		try {
+			shoot(gameId, getBestTarget(entities, islands).getAngle());
+		} catch (IllegalArgumentException e) {
+			
+		}
+	}
+	
+	private boolean mustSlowDown(Collection<Entity> entities, double angle) {
+		if (troubleInChoosenAngle(angle))
+			return true;
+		for (Entity entity : entities) {
+			if (!entity.getOwner().equals(getOwner()))
+				return true;
+		}
+		return false;
+	}
+	
+	private double mustMove(Collection<Entity> entities) {
+		double chosenAngle = 1000;
+		for (Entity entity : entities) {
+			if (entity.getOwner().equals(getOwner()))
+				continue;
+			return chosenAngle;
+		}
+		chosenAngle = getAngle().getAngle();
+		Stack<Double> x = new Stack<>();
+		for (int i = 0; i < 10; i++) {
+			x.push(Math.random() * MAX_STEERING_PER_ROUND * 2 - MAX_STEERING_PER_ROUND);
+		}
+		for (Double d : x) {
+			if (!troubleInChoosenAngle(chosenAngle + d))
+				return d;
+		}
+		/*if (!troubleInChoosenAngle(chosenAngle))
+			//return chosenAngle;
+			return 0;
+		
+		if (!troubleInChoosenAngle(chosenAngle + MAX_STEERING_PER_ROUND))
+			//return chosenAngle + MAX_STEERING_PER_ROUND > 360 ? chosenAngle + MAX_STEERING_PER_ROUND - 360 : chosenAngle + MAX_STEERING_PER_ROUND;
+			return MAX_STEERING_PER_ROUND;
+			
+		if (!troubleInChoosenAngle(chosenAngle - MAX_STEERING_PER_ROUND))
+			//return chosenAngle - MAX_STEERING_PER_ROUND < 0 ? chosenAngle - MAX_STEERING_PER_ROUND + 360 : chosenAngle - MAX_STEERING_PER_ROUND;
+			return -MAX_STEERING_PER_ROUND;*/
+		
+		return 1000;
 	}
 
-	private double mustAvoidCollision(Collection<Entity> entities, Collection<Island> islands) {
+	private double mustAvoidCollision(Collection<Entity> entities) {
 		double chosenAngle = 1000;
 		for (Entity entity : entities) {
 			if (entity.getType() == ObjectType.TORPEDO) {
@@ -162,8 +223,8 @@ public class Submarine extends Entity {
 							break;
 						}
 						else {
-							if (maxSteeringMinus > 360)
-								maxSteeringMinus -= 360;
+							if (maxSteeringMinus < 0)
+								maxSteeringMinus += 360;
 							chosenAngle = maxSteeringMinus;
 							break;
 						}
@@ -171,17 +232,19 @@ public class Submarine extends Entity {
 				}
 			}
 		}
-		return chosenAngle;
+		System.out.println("MustAvoidCollision(" + id +"): " + chosenAngle);
+		return chosenAngle == 1000 ? 1000 : chosenAngle - getAngle().getAngle();
 	}
 
 	private boolean troubleInChoosenAngle(double angle) {
-		Point newPos = new Point(getPosition().getX() + getVelocity() * 2 * Math.cos(angle),
-				getPosition().getY() + getVelocity() * 2 * Math.sin(angle));
+		//Point newPos = new Point(getPosition().getX() + getVelocity() * 5 * Math.cos(angle),
+		//		getPosition().getY() + getVelocity() * 5 * Math.sin(angle));
+		Point newPos = Point.getPositionAfterTurns(getPosition(), new Direction(angle), 5, getVelocity());
 		for (Island island : Island.getIslands()) {
 			if (!Point.getCircleLineIntersectionPoint(getPosition(), newPos, island.getCenter(), Island.SIZE).isEmpty())
 				return true;
 		}
-		if (newPos.getX() >= Game.getMapX() || newPos.getX() <= 0 || newPos.getY() >= Game.getMapY() || newPos.getY() <= 0)
+		if (newPos.getX() + SIZE >= Game.getMapX() || newPos.getX() - SIZE <= 0 || newPos.getY() + SIZE >= Game.getMapY() || newPos.getY() - SIZE <= 0)
 			return true;
 		return false;
 	}
@@ -194,7 +257,7 @@ public class Submarine extends Entity {
 		int round = 0;
 		double angle = 0;
 		entityFor: for (Entity entity : entities) {
-			if (entity.getType() == ObjectType.SUBMARINE && entity.getOwner() != getOwner()) {
+			if (entity.getType() == ObjectType.SUBMARINE && !entity.getOwner().equals(getOwner())) {
 				int i;
 				for (i = 1; i < Torpedo.RANGE; i++) {
 					Point pos = new Point(entity.getPosition().getX() + i * Math.cos(entity.getAngle().getAngle()),
@@ -226,6 +289,7 @@ public class Submarine extends Entity {
 				angles.add(angle);
 				rounds.add(round);
 			}
+			System.out.println(entity.getOwner().getName());
 		}
 		if (rounds.isEmpty())
 			throw new IllegalArgumentException();
@@ -234,6 +298,7 @@ public class Submarine extends Entity {
 			if (i < rounds.get(best) && i * Torpedo.SPEED > Torpedo.EXPLOSION_RADIUS)
 				best = rounds.indexOf(i);
 		}
+		System.out.println("GetBestTarget("+id+"): " + angles.get(best));
 		return new Direction(angles.get(best));
 	}
 
