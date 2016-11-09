@@ -25,6 +25,10 @@ public final class HttpManager {
 		}
 
 	}
+	
+	public static void setDefaultURL(String URL) {
+		defaultURL = "http://" + URL + "/";
+	}
 
 	private static void sendGET() {
 		//connection.setRequestProperty("Content-Length", Integer.toString(urlParameters.getBytes().length));

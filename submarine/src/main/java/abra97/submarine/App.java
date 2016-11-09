@@ -10,14 +10,10 @@ public class App
 {
     public static void main( String[] args )
     {    
-        //System.out.println(HttpManager.newGame());
-        //System.out.println(HttpManager.gameList());
-        //System.out.println(HttpManager.connectGame(751685318));
-        //MyJson.xyJsonParser();
-    	//Game g = new Game();
-    	//System.out.println(g.getGameID());
+    	if (args.length != 0) {
+    		HttpManager.setDefaultURL(args[0]);
+    	}
     	
-    	//Entity e = new Submarine(1, null, null, 0, null);
     	Game g = new Game();
     	System.out.println(Torpedo.SPEED + " - " + Torpedo.EXPLOSION_RADIUS + " - " + Torpedo.RANGE);
     	do {
@@ -25,7 +21,6 @@ public class App
     		try {
 				Thread.sleep(g.getRoundLength());
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} while (g.getStatus() == GameStatus.RUNNING);
